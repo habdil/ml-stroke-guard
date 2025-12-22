@@ -6,6 +6,7 @@ numpy==2.0.2
 joblib==1.4.2
 pydantic==2.10.3
 python-multipart==0.0.20
+email-validator==2.1.0
 
 # Database dependencies
 psycopg2-binary==2.9.9
