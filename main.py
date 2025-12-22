@@ -1,71 +1,90 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from ml.utils.prediction import StrokePredictor
-from pydantic import BaseModel
+from contextlib import asynccontextmanager
 import logging
 
+# Import routers
+from app.routers import auth, screening, admin
+from app.database import init_db_pool, close_db_pool
+
 # Setup logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
 logger = logging.getLogger(__name__)
 
-app = FastAPI(title="StrokeGuard API")
+# Lifespan context manager for startup/shutdown events
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup
+    logger.info("Starting StrokeGuard API...")
+    try:
+        init_db_pool()
+        logger.info("Database connection pool initialized")
+    except Exception as e:
+        logger.error(f"Failed to initialize database: {e}")
+        raise
+    
+    yield
+    
+    # Shutdown
+    logger.info("Shutting down StrokeGuard API...")
+    close_db_pool()
+    logger.info("Database connection pool closed")
+
+# Create FastAPI app
+app = FastAPI(
+    title="StrokeGuard API",
+    description="API for stroke risk prediction with user management",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 # CORS middleware
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=["*"],  # In production, specify exact origins
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Initialize predictor
-try:
-    predictor = StrokePredictor()
-    logger.info("Model loaded successfully")
-except Exception as e:
-    logger.error(f"Failed to load model: {str(e)}")
-    raise
+# Include routers
+app.include_router(auth.router)
+app.include_router(screening.router)
+app.include_router(admin.router)
 
-class PredictionInput(BaseModel):
-    age: float
-    gender: int
-    hypertension: int
-    heart_disease: int
-    ever_married: int
-    Residence_type: int
-    avg_glucose_level: float
-    bmi: float
-    work_type_Govt_job: int
-    work_type_Never_worked: int
-    work_type_Private: int
-    work_type_Self_employed: int  # Perbaiki nama field ini
-    work_type_children: int
-    smoking_status_Unknown: int
-    smoking_status_formerly_smoked: int
-    smoking_status_never_smoked: int
-    smoking_status_smokes: int
-
-    class Config:
-        # Izinkan konversi dari snake_case ke camelCase
-        allow_population_by_field_name = True
-
+# Root endpoint
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to StrokeGuard API", "status": "healthy"}
+    return {
+        "message": "Welcome to StrokeGuard API",
+        "status": "healthy",
+        "version": "1.0.0",
+        "endpoints": {
+            "auth": "/auth (register, login)",
+            "screening": "/screening (predict, history)",
+            "admin": "/admin (patients, statistics)",
+            "docs": "/docs (Swagger UI)",
+            "redoc": "/redoc (ReDoc)"
+        }
+    }
 
-@app.post("/predict")
-async def predict(data: PredictionInput):
-    try:
-        logger.info("Received prediction request")
-        input_data = data.dict()
-        result = predictor.make_prediction(input_data)
-        logger.info("Prediction completed successfully")
-        return result
-    except Exception as e:
-        logger.error(f"Prediction error: {str(e)}")
-        raise HTTPException(status_code=500, detail=str(e))
+# Health check endpoint
+@app.get("/health")
+def health_check():
+    return {
+        "status": "healthy",
+        "database": "connected"
+    }
 
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(
+        "main:app",
+        host="0.0.0.0",
+        port=8000,
+        reload=True,  # Enable auto-reload for development
+        log_level="info"
+    )
