@@ -1,0 +1,108 @@
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 877, in import_email_validator
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "/app/main.py", line 7, in <module>
+    from app.routers import auth, screening, admin
+  File "/app/app/routers/auth.py", line 5, in <module>
+    from app.models import UserRegister, UserLogin, Token, UserResponse
+  File "/app/app/models.py", line 47, in <module>
+    class UserRegister(BaseModel):
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_model_construction.py", line 226, in __new__
+    complete_model_class(
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_model_construction.py", line 658, in complete_model_class
+    schema = cls.__get_pydantic_core_schema__(cls, handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_schema_generation_shared.py", line 84, in __call__
+    schema = self._handler(source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 612, in generate_schema
+    schema = self._generate_schema_inner(obj)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 881, in _generate_schema_inner
+    return self._model_schema(obj)
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 693, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1073, in _generate_md_field_schema
+    common_field = self._common_field_schema(name, field_info, decorators)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1265, in _common_field_schema
+    schema = self._apply_annotations(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 2062, in _apply_annotations
+    schema = get_inner_schema(source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_schema_generation_shared.py", line 84, in __call__
+    schema = self._handler(source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 2041, in inner_handler
+    from_property = self._generate_schema_from_property(obj, source_type)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 761, in _generate_schema_from_property
+    schema = get_schema(
+             ^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 917, in __get_pydantic_core_schema__
+    import_email_validator()
+  File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 879, in import_email_validator
+    raise ImportError('email-validator is not installed, run `pip install pydantic[email]`') from e
+ImportError: email-validator is not installed, run `pip install pydantic[email]`
+The above exception was the direct cause of the following exception:
+Traceback (most recent call last):
+  File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 877, in import_email_validator
+    import email_validator
+ModuleNotFoundError: No module named 'email_validator'
+Traceback (most recent call last):
+  File "/app/main.py", line 7, in <module>
+    from app.routers import auth, screening, admin
+  File "/app/app/routers/auth.py", line 5, in <module>
+    from app.models import UserRegister, UserLogin, Token, UserResponse
+  File "/app/app/models.py", line 47, in <module>
+    class UserRegister(BaseModel):
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_model_construction.py", line 226, in __new__
+    complete_model_class(
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_model_construction.py", line 658, in complete_model_class
+    schema = cls.__get_pydantic_core_schema__(cls, handler)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/main.py", line 702, in __get_pydantic_core_schema__
+    return handler(source)
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_schema_generation_shared.py", line 84, in __call__
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 761, in _generate_schema_from_property
+    schema = get_schema(
+    schema = self._handler(source_type)
+  File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 879, in import_email_validator
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    raise ImportError('email-validator is not installed, run `pip install pydantic[email]`') from e
+           ^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 2041, in inner_handler
+ImportError: email-validator is not installed, run `pip install pydantic[email]`
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_schema_generation_shared.py", line 84, in __call__
+    from_property = self._generate_schema_from_property(obj, source_type)
+    schema = self._handler(source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 612, in generate_schema
+    schema = self._generate_schema_inner(obj)
+             ^^^^^^^^^^^
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 881, in _generate_schema_inner
+    return self._model_schema(obj)
+  File "/usr/local/lib/python3.12/site-packages/pydantic/networks.py", line 917, in __get_pydantic_core_schema__
+           ^^^^^^^^^^^^^^^^^^^^^^^
+    import_email_validator()
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 693, in _model_schema
+    {k: self._generate_md_field_schema(k, v, decorators) for k, v in fields.items()},
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1073, in _generate_md_field_schema
+    common_field = self._common_field_schema(name, field_info, decorators)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 1265, in _common_field_schema
+    schema = self._apply_annotations(
+             ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_generate_schema.py", line 2062, in _apply_annotations
+    schema = get_inner_schema(source_type)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
