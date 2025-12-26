@@ -101,11 +101,11 @@ class StrokePredictor:
                 confidence = "Low"
 
             return {
-                "prediction": prediction,
+                "prediction": int(prediction),
                 "probability": float(probability),
                 "risk_factors": risk_factors,
                 "confidence": confidence,
-                "threshold": self.optimal_threshold
+                "threshold": float(self.optimal_threshold)
             }
 
         except Exception as e:

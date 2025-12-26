@@ -37,9 +37,9 @@ def calculate_bmi(height_cm: float, weight_kg: float) -> float:
 
 def get_risk_level(probability: float) -> str:
     """Determine risk level from probability"""
-    if probability >= 0.7:
+    if probability >= 0.56:
         return "High"
-    elif probability >= 0.4:
+    elif probability >= 0.40:
         return "Medium"
     else:
         return "Low"
@@ -139,12 +139,12 @@ async def create_screening(
         # Make prediction
         prediction_result = predictor.make_prediction(ml_input)
         
-        # Extract all ML model outputs
-        stroke_probability = prediction_result.get("probability", 0.0)
-        risk_factors = prediction_result.get("risk_factors", [])
-        confidence = prediction_result.get("confidence", "Medium")
-        prediction = prediction_result.get("prediction", 0)
-        threshold = prediction_result.get("threshold", 0.5)
+        # Extract all ML model outputs and convert to Python native types
+        stroke_probability = float(prediction_result.get("probability", 0.0))
+        risk_factors = list(prediction_result.get("risk_factors", []))
+        confidence = str(prediction_result.get("confidence", "Medium"))
+        prediction = int(prediction_result.get("prediction", 0))
+        threshold = float(prediction_result.get("threshold", 0.5))
         risk_level = get_risk_level(stroke_probability)
         
         logger.info(f"Prediction made for user {current_user['email']}: {risk_level} ({stroke_probability:.4f})")
