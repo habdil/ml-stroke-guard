@@ -7,11 +7,11 @@
 -- ============================================
 
 -- Composite index untuk query yang sering digunakan
-CREATE INDEX idx_screenings_user_risk ON stroke_screenings(user_id, risk_level);
+CREATE INDEX IF NOT EXISTS idx_screenings_user_risk ON stroke_screenings(user_id, risk_level);
 
--- Index untuk filtering berdasarkan tanggal
-CREATE INDEX idx_screenings_date_range ON stroke_screenings(created_at) 
-WHERE created_at >= CURRENT_DATE - INTERVAL '1 year';
+-- Index untuk filtering berdasarkan tanggal.
+-- Hindari partial index dengan CURRENT_DATE karena predicate harus IMMUTABLE.
+CREATE INDEX IF NOT EXISTS idx_screenings_date_range ON stroke_screenings(created_at DESC);
 
 -- ============================================
 -- VIEWS FOR REPORTING
@@ -89,8 +89,7 @@ RETURNS INTEGER AS $$
 BEGIN
     RETURN EXTRACT(YEAR FROM AGE(CURRENT_DATE, birth_date));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
-
+$$ LANGUAGE plpgsql STABLE;
 COMMENT ON FUNCTION get_user_age IS 'Menghitung umur dari tanggal lahir';
 
 -- Function: Calculate BMI

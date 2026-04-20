@@ -1,7 +1,7 @@
 -- Full Database Schema for ML Stroke Guard
 -- Description: Complete schema untuk reference
 -- Created: 2025-12-22
--- Database: PostgreSQL (Supabase)
+-- Database: PostgreSQL (Neon)
 
 -- ============================================
 -- EXTENSIONS
@@ -135,7 +135,7 @@ RETURNS INTEGER AS $$
 BEGIN
     RETURN EXTRACT(YEAR FROM AGE(CURRENT_DATE, birth_date));
 END;
-$$ LANGUAGE plpgsql IMMUTABLE;
+$$ LANGUAGE plpgsql STABLE;
 
 -- Calculate BMI function
 CREATE OR REPLACE FUNCTION calculate_bmi(height_cm DECIMAL, weight_kg DECIMAL)

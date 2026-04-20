@@ -1,0 +1,10 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
+  "fluid": true,
+  "functions": {
+    "index.py": {
+      "excludeFiles": "{.venv/**,__pycache__/**,database/**,ml/data/raw/**,*.md,TestCase.md,errordiproduction.txt,Dockerfile,.dockerignore}"
+    }
+  }
+}
