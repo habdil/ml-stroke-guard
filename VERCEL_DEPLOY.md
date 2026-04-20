@@ -2,7 +2,7 @@
 
 ## Files added
 
-- `index.py`: entrypoint FastAPI untuk Vercel
+- `api/index.py`: entrypoint FastAPI untuk Vercel
 - `vercel.json`: config Vercel Functions
 - `.python-version`: pin Python `3.12`
 
